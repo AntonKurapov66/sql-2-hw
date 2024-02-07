@@ -6,16 +6,16 @@
    * фамилия и имя сотрудника из этого магазина;
    * город нахождения магазина;
    * количество пользователей, закреплённых в этом магазине.
- 
+* ![alt text](https://github.com/AntonKurapov66/sql_1_hw/blob/main/img/1.PNG)
 ```sql
-       select staff_id 'Менеджер', count(payment_id) 'Кол-во продаж',
-	case 
-		when count(payment_id) > 8000 then 'ДА'
-		else 'НЕТ'
-	end as 'Премия'
-from payment p 
-group by staff_id; 
-
+	select
+		st.last_name 'Фамилия', st.first_name 'Имя', ci.city 'Город',count(cu.customer_id) 'Кол-во клиентов'
+	from customer cu
+	join staff st on (st.store_id = cu.store_id )
+	join address ad on (ad.address_id = st.address_id)
+	join city ci on (ci.city_id = ad.city_id)
+	group by st.first_name , st.last_name , ci.city
+	having count(cu.customer_id)>300;
 ```
 ### Задание 2
 * Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
@@ -27,20 +27,4 @@ group by staff_id;
 * Посчитайте количество продаж, выполненных каждым продавцом. Добавьте вычисляемую колонку «Премия». Если количество продаж превышает 8000, то значение в колонке будет «Да», иначе должно быть значение «Нет».
 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- ####  ![alt text](https://github.com/AntonKurapov66/sql_1_hw/blob/main/img/1.PNG)
+
